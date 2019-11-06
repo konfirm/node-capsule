@@ -1,6 +1,6 @@
 {
 	"name": "@konfirm/capsule",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "Container implementation",
 	"main": "source/main.js",
 	"scripts": {
