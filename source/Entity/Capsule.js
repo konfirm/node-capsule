@@ -2,21 +2,49 @@ const { AbstractResolver } = require('@konfirm/resolver');
 
 const storage = new WeakMap();
 
+/**
+ * Small Capsule acting as a trap handler for proxies
+ *
+ * @class Capsule
+ */
 class Capsule {
+	/**
+	 * Creates an instance of Capsule
+	 *
+	 * @param {*} resolvers
+	 * @memberof Capsule
+	 */
 	constructor(...resolvers) {
-		storage.set(this, { resolvers, cache: new Map() });
+		storage.set(this, { resolvers, values: new Map() });
 	}
 
+	/**
+	 * Trap for the `in` operator
+	 *
+	 * @param {*} _ (target)
+	 * @param {*} key
+	 * @returns {boolean} has key
+	 * @memberof Capsule
+	 */
 	has(_, key) {
-		const { cache } = storage.get(this);
+		const { values } = storage.get(this);
 
-		return cache.has(key);
+		return values.has(key);
 	}
 
+	/**
+	 * Trap for getting a property value
+	 *
+	 * @param {*} _ (target)
+	 * @param {*} key
+	 * @returns {*} resolved value
+	 * @memberof Capsule
+	 */
 	get(_, key) {
-		const { cache, resolvers } = storage.get(this);
+		const { values, resolvers } = storage.get(this);
 
-		if (!cache.has(key)) {
+		// only try to resolve if no key is available
+		if (!values.has(key)) {
 			const [found, ...matches] = resolvers
 				.map((resolver) => ({
 					resolver,
@@ -38,26 +66,50 @@ class Capsule {
 						)
 					);
 
-					cache.set(key, encapsulated);
+					values.set(key, encapsulated);
 				} else {
-					cache.set(key, resolved);
+					values.set(key, resolved);
 				}
 			}
 		}
 
-		return cache.get(key);
+		return values.get(key);
 	}
 
+	/**
+	 * Trap for setting a property value
+	 *
+	 * @param {*} _
+	 * @param {*} key
+	 * @param {*} value
+	 * @memberof Capsule
+	 */
 	set(_, key, value) {
-		const { cache } = storage.get(this);
+		const { values } = storage.get(this);
 
-		cache.set(key, value);
+		values.set(key, value);
 	}
 
+	/**
+	 * Trap for the [[GetPrototypeOf]] internal method
+	 *
+	 * @returns
+	 * @memberof Capsule
+	 */
 	getPrototypeOf() {
-		return this.constructor.prototype;
+		const {
+			constructor: { prototype }
+		} = this;
+
+		return prototype;
 	}
 
+	/**
+	 * Obtain a new Proxy around the current Capsule
+	 *
+	 * @readonly
+	 * @memberof Capsule
+	 */
 	get encapsulated() {
 		return new Proxy({}, this);
 	}
