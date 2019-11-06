@@ -8,10 +8,10 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/konfirm/node-resolver.git"
+		"url": "https://github.com/konfirm/node-capsule.git"
 	},
 	"bugs": {
-		"url": "https://github.com/konfirm/node-resolver/issues"
+		"url": "https://github.com/konfirm/node-capsule/issues"
 	},
 	"keywords": [
 		"capsule",
