@@ -13,6 +13,6 @@
     "@konfirm/labrat": "^2.0.2"
   },
   "dependencies": {
-    "@konfirm/resolver": "file:../resolver"
+    "@konfirm/resolver": "^1.0.0"
   }
 }
