@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+- '10'
+- '11'
+- '12'
+- '13'
+jobs:
+  include:
+    matrix:
+    - stage: npm release
+      if: tag IS present
+      node_js: 12
+      deploy:
+        provider: npm
+        email: rogier+npm@konfirm.eu
+        on:
+          branch: master
+          tags: true
+        api_key: 

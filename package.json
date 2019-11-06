@@ -1,18 +1,32 @@
 {
-  "name": "@konfirm/capsule",
-  "version": "0.0.0",
-  "description": "",
-  "main": "source/main.js",
-  "scripts": {
-    "test": "./node_modules/.bin/lab -vcl"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@konfirm/labrat": "^2.0.2"
-  },
-  "dependencies": {
-    "@konfirm/resolver": "^1.0.0"
-  }
+	"name": "@konfirm/capsule",
+	"version": "0.0.0",
+	"description": "Container implementation",
+	"main": "source/main.js",
+	"scripts": {
+		"test": "./node_modules/.bin/lab -vcl"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/konfirm/node-resolver.git"
+	},
+	"bugs": {
+		"url": "https://github.com/konfirm/node-resolver/issues"
+	},
+	"keywords": [
+		"capsule",
+		"container",
+		"autoload"
+	],
+	"author": "Rogier Spieker <rogier+npm@konfirm.eu>",
+	"license": "MIT",
+	"engines": {
+		"node": ">=10"
+	},
+	"devDependencies": {
+		"@konfirm/labrat": "^2.0.2"
+	},
+	"dependencies": {
+		"@konfirm/resolver": "^1.0.0"
+	}
 }
