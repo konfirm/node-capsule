@@ -3,7 +3,8 @@
 const Path = require('path');
 const Capsule = source('main');
 const {
-	Resolver: { VirtualResolver, RequireResolver }
+	Resolver: { VirtualResolver, RequireResolver },
+	Capsule: CapsuleClass
 } = Capsule;
 
 describe('cases/allocation', () => {
@@ -18,6 +19,9 @@ describe('cases/allocation', () => {
 		capsule.alias.nested.core = new Capsule(
 			new RequireResolver(Path.join(sample, 'Core'))
 		);
+
+		expect(capsule.alias).to.be.instanceOf(Capsule);
+		expect(capsule.alias).to.be.instanceOf(CapsuleClass);
 
 		expect('One' in capsule.core).to.be.false();
 		expect(capsule.core.One).to.be.string();
